@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".gogo"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
     </application>
 
 </manifest>

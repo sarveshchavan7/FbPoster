@@ -1,6 +1,7 @@
 package com.facebookapi;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,9 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     LoginButton lb;
@@ -113,9 +117,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-      /*  Intent intent=new Intent(MainActivity.this,gogo.class);
-        startActivity(intent);*/
+       Intent intent=new Intent(MainActivity.this,gogo.class);
+        startActivity(intent);
     }
 
 
+    public void wtf(View view) {
+        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://graph.facebook.com/"+PAGE_ID+"/members?access_token="+x));
+        startActivity(intent);
+    }
 }
