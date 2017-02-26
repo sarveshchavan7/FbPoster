@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -20,12 +27,19 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.facebookapi.application.AppController2;
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     LoginButton lb;
@@ -35,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
     String x;
     private static final String PAGE_ID = "288637851555189";
 
+    private static final String getURL = "https://api.myjson.com/bins/8wgo1";
+    RequestQueue requestQueue;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         lb = (LoginButton) findViewById(R.id.button_fb);
         tv = (TextView) findViewById(R.id.text);
         post = (Button) findViewById(R.id.post);
+        requestQueue=Volley.newRequestQueue(this);
 
         callbackManager = CallbackManager.Factory.create();
         lb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -51,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 x = loginResult.getAccessToken().getToken();
 
             }
+
 
             @Override
             public void onCancel() {
@@ -117,13 +137,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-       Intent intent=new Intent(MainActivity.this,gogo.class);
-        startActivity(intent);
+
+
     }
 
 
     public void wtf(View view) {
-        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://graph.facebook.com/"+PAGE_ID+"/members?access_token="+x));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://graph.facebook.com/" + PAGE_ID + "/members?access_token=" + x));
         startActivity(intent);
     }
+
+    public void jason(View view) {
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,
+                "https://graph.facebook.com/" + PAGE_ID + "/members?access_token=" + x,
+                new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONArray jsonArray=response.getJSONArray("data");
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject=jsonArray.getJSONObject(i);
+                        Toast.makeText(MainActivity.this,jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this,"fuck bitches",Toast.LENGTH_LONG).show();
+            }
+        }
+        );requestQueue.add(jsonObjectRequest);
+
+
+    }
+
 }
