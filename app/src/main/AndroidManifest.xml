@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.facebookapi">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:name=".application.AppController2"
         android:allowBackup="true"
@@ -17,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gogo"
+        <activity android:name=".SuggestFb"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
     </application>
 
