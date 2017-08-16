@@ -37,7 +37,7 @@ import org.json.JSONObject;
 public class SuggestFb extends Activity {
     Button joinGroup, postOnFb;
     TextView topText, notice, notice2,textQuestion1;
-    private static final String PAGE_ID = "288637851555189";
+    private static final String PAGE_ID = "your_page_id_here";
     RequestQueue requestQueue;
     EditText textQuestion;
     String y;
