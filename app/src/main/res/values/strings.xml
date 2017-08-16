@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Facebookapi</string>
-    <string name="app_id">1240972812688850</string>
+    <string name="app_id">Your_app_id_here</string>
     <string name="joingroup">+ Join Group</string>
     <string name="textjoin">Join fb group to start suggesting questions.</string>
     <string name="textnotice">Notice: You can post after admin accepts your joining request thanks for your patience.</string>
